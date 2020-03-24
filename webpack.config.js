@@ -6,38 +6,23 @@ module.exports = {
   mode: "development",
   module: {
     rules: [
-        {
-            test: /\.(jpg|png)$/,
-            use: {
-              loader: 'url-loader',
-            },
-          },
-          
-          {
-            test: /\.less$/,
-            use: [
-              {
-                loader: 'style-loader', // creates style nodes from JS strings
-              },
-              {
-                loader: 'css-loader', // translates CSS into CommonJS
-              },
-              {
-                loader: 'less-loader', // compiles Less to CSS
-              },
-            ],
-          },
-
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
         options: { presets: ["@babel/env"] }
       },
-
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        test: /\.less$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "less-loader" }
+        ]
+      },
+      {
+        test: [/\.bmp/, /\.gif/, /\.jpe?g/, /\.png/, /\.svg/],
+        loader: "url-loader"
       }
     ]
   },
@@ -48,11 +33,11 @@ module.exports = {
     filename: "bundle.js"
   },
   devServer: {
-    historyApiFallback: true,
     contentBase: path.join(__dirname, "public/"),
-    port: 3000,
+    port: 3002,
     publicPath: "http://localhost:3000/dist/",
-    hotOnly: true
+    hotOnly: true,
+    historyApiFallback: true
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
 };
